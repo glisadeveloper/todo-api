@@ -1,2 +1,2 @@
-# todo-api
-Laravel API - TODO List
+# todo
+Laravel API - TO DO list
