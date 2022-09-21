@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Todo;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Helpers\ReturnResponse;
 
 class TodoController extends Controller
@@ -28,7 +27,7 @@ class TodoController extends Controller
 
         $user = User::where('id', $user_id)->first();
         if($user == null){
-            return ReturnResponse::returnJson('todo', ["msg" => 'User with id '.$user_id.' does not exist !'], 'unsuccessful', 404); 
+            return ReturnResponse::returnJson('todo', ["message" => 'User with id '.$user_id.' does not exist !'], false, 404); 
         }
 
         $data = [
@@ -40,7 +39,7 @@ class TodoController extends Controller
         $todo = new Todo($data); 
         $todo->save();
 
-        return ReturnResponse::returnJson('todo', $todo, 'success', 200);  
+        return ReturnResponse::returnJson('todo', $todo, true, 200);  
     }
 
     /**
@@ -66,9 +65,9 @@ class TodoController extends Controller
 
         if(Todo::where('id', $id)->first()){ 
             $todo = Todo::where('id', $id)->update($data);     
-            return ReturnResponse::returnJson('todo', $data, 'success', 200);          
+            return ReturnResponse::returnJson('todo', $data, true, 200);          
         }else{
-            return ReturnResponse::returnJson('todo', ["msg" => 'Todo item does not exist'], 'unsuccessful', 404);  
+            return ReturnResponse::returnJson('todo', ["message" => 'Todo item does not exist'], false, 404);  
         }    
     }
 
@@ -79,9 +78,9 @@ class TodoController extends Controller
     public function getSingle($id){
         $todo = Todo::where('id', $id)->first(['id','title', 'description', 'user_id']);
         if($todo){
-            return ReturnResponse::returnJson('todo', $todo, 'success', 200);  
+            return ReturnResponse::returnJson('todo', $todo, true, 200);  
         }
-        return ReturnResponse::returnJson('todo', ["msg" => "Todo item not found"], 'unsuccessful', 404);  
+        return ReturnResponse::returnJson('todo', ["message" => "Todo item not found"], false, 404);  
     }
 
     /**
@@ -89,7 +88,7 @@ class TodoController extends Controller
      */
     public function getAll(){
         $todos = Todo::all(['id','title', 'description', 'user_id']);
-        return ReturnResponse::returnJson('todo', $todos, 'success', 200);  
+        return ReturnResponse::returnJson('todo', $todos, true, 200);  
     }
 
     /**
@@ -100,9 +99,9 @@ class TodoController extends Controller
         $todo = Todo::where('id', $id)->first();  
         if ($todo !== null) {      
             $todo->delete();             
-            return ReturnResponse::returnJson('todo', ["msg" => "delete todo success"], 'success', 200);  
+            return ReturnResponse::returnJson('todo', ["message" => "delete todo success"], true, 200);  
         }else{
-            return ReturnResponse::returnJson('todo', ["msg" => "Todo item not found"], 'unsuccessful', 404);
+            return ReturnResponse::returnJson('todo', ["message" => "Todo item not found"], false, 404);
         }
     }
 }

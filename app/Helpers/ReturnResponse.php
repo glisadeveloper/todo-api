@@ -12,7 +12,7 @@ class ReturnResponse{
     public static function returnJson($nameArr, $data, $status, $code){
         return response()->json([
             $nameArr => $data,
-            'status' => $status
+            'success' => $status
         ], $code);
     }
 }
