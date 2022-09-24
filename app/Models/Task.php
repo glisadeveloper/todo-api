@@ -5,18 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Todo extends Model
+class Task extends Model
 {
     use HasFactory;
-    protected $table = "todo";
     protected $fillable = [
             'title',
             'description',            
-            'user_id',
-        ];    
+            'todo_id',
+            'deadline',
+            'done'
+        ]; 
 
-    public function tasks()
+    public function todo()
     {
-        return $this->hasMany(Task::class);
+        return $this->belongsTo(Todo::class);
     }
 }

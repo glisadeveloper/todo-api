@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use App\Helpers\ReturnResponse;
 
 class Authenticate extends Middleware
 {
@@ -18,4 +19,16 @@ class Authenticate extends Middleware
             return route('login');
         }
     }
+
+    /**
+     * Get the informations when they are not authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+     */
+    protected function unauthenticated($request, array $guards)
+    {
+         abort(response()->json(['todo-api' => ['error' => 'You are not logged in or your session has expired, please login !']], 401));         
+    }
+    
 }

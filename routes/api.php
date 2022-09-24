@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\Auth\UserAuthController;
+use App\Http\Controllers\TaskController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,6 +37,12 @@ Route::group(
         // endpoint that retrieves user's data
         Route::get('/me', [UserAuthController::class, 'me'])->middleware(['auth:api']);
 
+        // endpoint that update user's data
+        Route::put('/update', [UserAuthController::class, 'update'])->middleware(['auth:api']);
+
+         // endpoint that update user's timezone 
+        Route::put('/update-timezone', [UserAuthController::class, 'updateTimeZone'])->middleware(['auth:api']);
+
         // endpoint that logs out user
         Route::post('/logout', [UserAuthController::class, 'logOut'])->middleware(['auth:api']);
 
@@ -60,4 +68,17 @@ Route::group(["prefix"=>"todo"],function(){
     Route::post("/store",[TodoController::class,"store"])->middleware(['auth:api']);
     Route::put("/update/{id}",[TodoController::class,"update"])->middleware(['auth:api']);
     Route::delete("/delete/{id}",[TodoController::class,"delete"])->middleware(['auth:api']);
+});
+
+
+/**
+ * TASKs' routes
+ */
+
+Route::group(["prefix"=>"task"],function(){
+    Route::get("/",[TaskController::class,"getAll"])->middleware(['auth:api']);
+    Route::get("/{id}",[TaskController::class,"getSingle"])->middleware(['auth:api']);   
+    Route::post("/store",[TaskController::class,"store"])->middleware(['auth:api']);
+    Route::put("/complete/{id}",[TaskController::class,"complete"])->middleware(['auth:api']);
+    Route::delete("/delete/{id}",[TaskController::class,"delete"])->middleware(['auth:api']);
 });

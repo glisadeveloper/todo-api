@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('title', 100);
             $table->text('description');
-            //$table->integer('user_id');
             $table->timestamps();  
 
             $table->foreignId('user_id')
