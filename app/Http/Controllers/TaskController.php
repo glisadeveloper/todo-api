@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ReturnResponse;
 use App\Models\Task;
 use App\Models\Todo;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,6 +34,11 @@ class TaskController extends Controller
         $user = User::where('id', $user_id)->first();
         if($user == null){
             return ReturnResponse::returnJson('todo-api', ["message" => 'User with id '.$user_id.' does not exists !'], false, 403); 
+        }
+
+        $todo = Todo::where('id', $request->todo_id)->first();
+        if($todo == null){
+            return ReturnResponse::returnJson('todo-api', ["message" => 'Todo list ( daily list ) with id '.$request->todo_id.' does not exists !'], false, 403); 
         }
 
         $task = Task::create([

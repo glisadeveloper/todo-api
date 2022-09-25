@@ -53,8 +53,7 @@ class TodoController extends Controller
         $request->validate(
             [   
                 'title' => 'required',
-                'description' => 'required',             
-                'user_id' => 'required'
+                'description' => 'required' 
             ]
         );
 
